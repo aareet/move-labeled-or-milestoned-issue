@@ -59,7 +59,8 @@ async function run() {
         } else {
             // card is not present
             // create new card in the appropriate column
-            if (addNote == true) {
+            if (addNote == "true") {
+                console.log(`Note creation requested instead of card creation`)
                 return await createNewNote(octokit, columnId, context.payload.issue.title);
             }
             else {
