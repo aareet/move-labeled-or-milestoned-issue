@@ -60,8 +60,8 @@ async function run() {
             // card is not present
             // create new card in the appropriate column
             if (addNote == "true") {
-                console.log(`Note creation requested instead of card creation`)
-                return await createNewNote(octokit, columnId, context.payload.issue.title);
+                console.log("Note creation requested instead of card creation");
+                return await createNewNote(octokit, columnId, context.payload.issue.html_url);
             }
             else {
                 return await createNewCard(octokit, columnId, context.payload.issue.id);
@@ -73,13 +73,13 @@ async function run() {
     }
 }
 
-async function createNewNote(octokit, columnId, issueTitle){
-    console.log(`Note requested, creating a note for Issue #${issueTitle}`);
+async function createNewNote(octokit, columnId, issueURL){
+    console.log(`Note requested, creating a note for Issue #${issueURL}`);
     await octokit.projects.createCard({
         column_id: columnId,
-        note: `${issueTitle}`
+        note: `${issueURL}`
     });
-    return `Successfully created a new card in column #${columnId} for an issue with the corresponding id:${issueTitle} !`;
+    return `Successfully created a new card in column #${columnId} for an issue with the corresponding id:${issueURL} !`;
 }
 
 async function createNewCard(octokit, columnId, issueId){
